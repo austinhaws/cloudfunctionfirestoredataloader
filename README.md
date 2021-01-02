@@ -17,10 +17,10 @@ Loader for firestore data for easy importing of large sets of data
     - HTTP
     - Unauthenticated endpoint
 - Environment
-    - NodeJS 12
+    - NodeJS 10
 
 # Technologies
-- NodeJS12
+- NodeJS10
 - GCP cloud function
 - apollo
 - express

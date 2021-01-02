@@ -5,7 +5,7 @@
         - deploy
         - --trigger-http
         - --allow-unauthenticated
-        - --runtime=nodejs12
+        - --runtime=nodejs10
         - --source=.
         - --entry-point=api
         - --service-account=cloud-function-firestore-load@causal-block-97013.iam.gserviceaccount.com
