@@ -1,0 +1,12 @@
+  steps:
+    - name: gcr.io/cloud-builders/gcloud
+      args:
+        - functions
+        - deploy
+        - --trigger-http
+        - --allow-unauthenticated
+        - --runtime=nodejs12
+        - --source=.
+        - --entry-point=api
+        - --service-account=cloud-function-firestore-load@causal-block-97013.iam.gserviceaccount.com
+        - firestore-dataloader
