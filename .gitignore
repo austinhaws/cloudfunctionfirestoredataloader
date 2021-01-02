@@ -119,5 +119,7 @@ dist
 /.idea/
 
 *.iml
-ut-dts-fantasy*.json*
+causal-block-*.json
 openIdKeys.json
+
+.DS_Store
