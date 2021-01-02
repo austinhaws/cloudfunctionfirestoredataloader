@@ -2,7 +2,7 @@ let firestore;
 
 // if developing locally, then use key file for service account information
 // DEV comes from the .env file and dotenv library if they exist (shouldn't exist in prod)
-if (process && process.env && process.env.DEV) {
+if (process?.env?.DEV) {
   const Firestore = require('@google-cloud/firestore');
   firestore = new Firestore({
     projectId: 'causal-block-97013',
