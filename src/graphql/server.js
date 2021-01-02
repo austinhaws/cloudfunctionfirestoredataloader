@@ -3,8 +3,6 @@ import express from 'express';
 import resolvers from './resolverFunctions';
 import schema from './schema';
 
-console.log('Got here - A');
-
 const {ErrorReporting} = require('@google-cloud/error-reporting');
 const errors = new ErrorReporting();
 
@@ -31,11 +29,7 @@ export default async () => {
     },
   });
 
-  console.log('Got here - B');
-
   apolloServer.applyMiddleware({app, path: '/', cors: true});
-
-  console.log('Got here - C');
 
   // Note that express error handling middleware should be attached after all
   // the other routes and use() calls. See the Express.js docs.
@@ -43,13 +37,10 @@ export default async () => {
 
   // if running locally in dev, then keep server running
   if (process.env.DEV) {
-console.log('Got here - D');
     const port = 9031;
     app.listen(port);
 console.log(`http://localhost:${port}`);
   }
-
-console.log('Got here - E');
 
   return app;
 };

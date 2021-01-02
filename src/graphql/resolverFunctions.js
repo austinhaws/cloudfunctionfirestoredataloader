@@ -3,7 +3,7 @@ import versionQuery from './query/versionQuery';
 import dateType from './scalar/DateType';
 
 // convert parameters to object for succinct spread usage
-const useObjectParams = func => (parent, args, context, info) => func({parent, args, context, info});
+const useObjectParams = func => (parent, args, context, info) => func({ parent, args, context, info });
 
 // change functions from (parent, args, context, info) to be ({parent, args, context, info})
 const connectObjectParams = obj => {
@@ -30,7 +30,7 @@ const connectObjectParams = obj => {
 const resolverFunctions = {
   Query: {
     version: versionQuery,
-},
+  },
 
   Mutation: {
     deleteBracket: deleteBracketMutation,
