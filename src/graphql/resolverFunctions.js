@@ -1,4 +1,3 @@
-import deleteBracketMutation from "./mutation/deleteBracketMutation";
 import versionQuery from './query/versionQuery';
 import dateType from './scalar/DateType';
 
