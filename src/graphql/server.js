@@ -16,7 +16,7 @@ export default async () => {
     // Enable graphiql gui
     introspection: true,
     playground: true,
-    // tracing: process.env.DEV,
+    tracing: true,
     context: async ({req}) => ({req}),
     formatError: err => {
       console.log(JSON.stringify(err, null, 4));
