@@ -10,19 +10,14 @@ export default async () => {
   const app = express();
 
   const apolloServer = new ApolloServer({
+    debug: true,
     typeDefs: schema,
     resolvers,
     // Enable graphiql gui
     introspection: true,
     playground: true,
     // tracing: process.env.DEV,
-    context: async ({req}) => ({
-
-      // recreate loaders for each request so that caching is on the request level and not on the server level
-      // https://www.robinwieruch.de/graphql-apollo-server-tutorial#batching-and-caching-in-graphql-with-data-loader
-      // loaders: loaders(),
-      req,
-    }),
+    context: async ({req}) => ({req}),
     formatError: err => {
       console.log(JSON.stringify(err, null, 4));
       return err;
