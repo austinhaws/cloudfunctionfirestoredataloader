@@ -36,7 +36,7 @@ export default async () => {
   app.use(errors.express);
 
   // if running locally in dev, then keep server running
-  if (process.env.DEV) {
+  if (process?.env?.DEV) {
     const port = 9031;
     app.listen(port);
 console.log(`http://localhost:${port}`);

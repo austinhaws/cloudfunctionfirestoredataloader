@@ -6,10 +6,6 @@ const schema = gql`
   type Query {
     version: String
   }
-
-  type Mutation {
-    deleteBracket(bracketId: ID!) : ID
-  }
 `;
 
 export default schema;

@@ -32,10 +32,6 @@ const resolverFunctions = {
     version: versionQuery,
   },
 
-  Mutation: {
-    deleteBracket: deleteBracketMutation,
-  },
-
   Date: dateType,
 };
 
