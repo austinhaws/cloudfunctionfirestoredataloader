@@ -12,8 +12,8 @@ module.exports = {
             blackSpeechData,
             elfSpeechData,
             goblinSpeechData,
-            nameData,
-            phraseData,
+            // nameData,
+            // phraseData,
             undeadSpeechData,
         ];
 
