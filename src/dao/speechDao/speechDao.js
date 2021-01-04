@@ -12,7 +12,7 @@ module.exports = {
     await crudDao.saveRecord({
       collection: Collections.dictionaryPhrases,
       merge: false,
-      record: speechData,
+      record: {id: speechData.name, ...speechData},
       where: {name: speechData.name},
     })
   ),

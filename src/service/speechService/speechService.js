@@ -1,10 +1,12 @@
 const speechDao = require("../../dao/speechDao/speechDao");
 const blackSpeechData = require('./data/blackSpeechData');
+const elfSpeechData = require("./data/elfSpeechData");
 
 module.exports = {
     loadSpeeches: () => {
         const speeches = [
-            blackSpeechData
+            blackSpeechData,
+            elfSpeechData
         ];
 
         speeches.forEach(speechDao.saveSpeechData);

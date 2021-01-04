@@ -1,7 +1,7 @@
 const constants = require('./constants');
 
 module.exports = {
-    name: 'Black Speech',
+    name: 'Elf',
     table: [
         { from: 'a', to: constants.VOWELS_CONVERTIBLE },
         { from: 'b', to: constants.CONSONANTS_CONVERTIBLE },
@@ -29,8 +29,8 @@ module.exports = {
         { from: 'x', to: constants.CONSONANTS_CONVERTIBLE },
         { from: 'y', to: constants.CONSONANTS_CONVERTIBLE },
         { from: 'z', to: constants.CONSONANTS_CONVERTIBLE },
-        { from: constants.VOWELS, to: ['a', 'u', 'i', 'ú', 'â', 'h', 'o', 'e'] },
-        { from: constants.CONSONANTS, to: ['h', 'g', 's', 'r', 'k', 'b', 'l', 'm', 'n', 'z', 'a', 'd', 't', 'p', 'r', 'f', 'u'] },
+        { from: constants.VOWELS, to: ['a', 'e', 'i', 'u', 'o', 'ä', 'ö', 'ë', 'á'] },
+        { from: constants.CONSONANTS, to: ['r', 'l', 'd', 't', 'h', 'ra', 'la', 'al', 'ar', 'n', 'g', 'b', 'k', 'f', 's', 'y', 'ay', 'ya', 'v', 'j', 'm', 'a', 'e', 'i', 'c', 'p', 'w', 'z', 'q', 'u', 'o'] },
         { from: constants.START, to: '*:PhrasesNameTable:' },
     ],
 };

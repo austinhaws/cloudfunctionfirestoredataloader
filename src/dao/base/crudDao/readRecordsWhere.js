@@ -16,12 +16,8 @@ const readByWhere = async ({ collection, where }) => {
 
 const readById = async ({ collection, id }) => {
   let appResult = await db.collection(collection).doc(id).get();
-  if (appResult && appResult.exists) {
-    appResult = documentToObject(appResult);
-
-    // expects results as an array, even if just one
-    return {docs: [appResult]};
-  }
+  // expects results as an array, even if just one
+  return appResult && {docs: [appResult]};
 };
 
 /**
