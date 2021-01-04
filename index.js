@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer, gql } = require('apollo-server-express');
 const express = require('express');
 
 require('dotenv').config();
@@ -75,7 +75,7 @@ const errorLogging = {
     },
 };
 
-const server = express();
+const expressServer = express();
 
 const apolloServer = new ApolloServer({
     debug: true,
@@ -89,16 +89,15 @@ const apolloServer = new ApolloServer({
     typeDefs,
 });
 
-
-// apolloServer.applyMiddleware({app, path: '/', cors: true});
+apolloServer.applyMiddleware({app: expressServer, path: '/', cors: true});
 
 // if running locally in dev, then keep server running
 if (process.env.DEV) {
   const port = 9031;
-  server.listen(port);
+  expressServer.listen(port);
 console.log(`http://localhost:${port}`);
 }
 
 const { https } = require('firebase-functions');
-const api = https.onRequest(server);
+const api = https.onRequest(expressServer);
 exports.api = api;

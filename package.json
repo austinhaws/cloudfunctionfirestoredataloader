@@ -19,6 +19,7 @@
   "homepage": "https://github.com/austinhaws/cloudfunctionfirestoredataloader#readme",
   "dependencies": {
     "apollo-server": "^2.19.1",
+    "apollo-server-express": "^2.19.1",
     "dotenv": "^8.2.0",
     "firebase-admin": "^9.4.2",
     "firebase-functions": "^3.13.0",
