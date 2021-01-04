@@ -25,7 +25,7 @@ const server = async () => {
 
     const resolvers = {
         Query: {
-            books: () => books,
+            books: () => console.log(books) || books,
         },
     };
 
@@ -93,11 +93,14 @@ const server = async () => {
             console.log(`🚀  Server ready at ${url}`);
         });
     }
-
+console.log('server created', apolloServer);
     return apolloServer;
 };
 
-
+console.log('got here a');
 const { https } = require('firebase-functions');
+console.log('got here b');
 const api = https.onRequest(server());
+console.log('got here c');
 exports.api = api;
+console.log('got here d');
