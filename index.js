@@ -1,8 +1,9 @@
-require('dotenv').config();
 const { ApolloServer, gql } = require('apollo-server');
+const express = require('express');
 
-const server = async () => {
-    const typeDefs = gql`
+require('dotenv').config();
+
+const typeDefs = gql`
   type Book {
     title: String
     author: String
@@ -12,95 +13,92 @@ const server = async () => {
     books: [Book]
   }
 `;
-    const books = [
-        {
-            title: 'The Awakening',
-            author: 'Kate Chopin',
-        },
-        {
-            title: 'City of Glass',
-            author: 'Paul Auster',
-        },
-    ];
+const books = [
+    {
+        title: 'The Awakening',
+        author: 'Kate Chopin',
+    },
+    {
+        title: 'City of Glass',
+        author: 'Paul Auster',
+    },
+];
 
-    const resolvers = {
-        Query: {
-            books: () => console.log(books) || books,
-        },
-    };
-
-    const errorLogging = {
-        requestDidStart(requestContext) {
-            console.log('Request started!', requestContext);
-            return {
-                parsingDidStart(requestContext) {
-                    console.log("ApolloGQL: parsingDidStart A", requestContext);
-                    return (err) => {
-                        if (err) {
-                          console.error("ApolloGQL: parsingDidStart B", err);
-                        }
-                      }
-                },
-                validationDidStart(requestContext) {
-                    console.log("ApolloGQL: validationDidStart A", requestContext);
-                    return (errs) => {
-                        if (errs) {
-                          errs.forEach(err => console.error("ApolloGQL: validationDidStart B", err));
-                        }
-                      }
-                },
-
-                didResolveOperation(requestContext) {
-                    console.log("ApolloGQL: didResolveOperation", requestContext);
-                },
-                responseForOperation(requestContext) {
-                    console.log("ApolloGQL: responseForOperation", requestContext);
-                },
-                executionDidStart(requestContext) {
-                    console.log("ApolloGQL: executionDidStart A", requestContext);
-                    return (err) => {
-                        if (err) {
-                          console.error("ApolloGQL: executionDidStart B", err);
-                        }
-                      }
-                },
-                didEncounterErrors(requestContext) {
-                    console.log("ApolloGQL: didEncounterErrors", requestContext);
-                },
-                willSendResponse(requestContext) {
-                    console.log("ApolloGQL: willSendResponse", requestContext);
-                },
-            }
-        },
-    };
-
-    const apolloServer = new ApolloServer({
-        debug: true,
-        introspection: true,
-        playground: true,
-        plugins: [
-            errorLogging
-        ],
-        resolvers,
-        tracing: true,
-        typeDefs,
-    });
-
-    // The `listen` method launches a web server.
-    console.log(process.env.dev);
-    if (process && process.env && process.env.DEV) {
-        apolloServer.listen().then(({ url }) => {
-            console.log(`🚀  Server ready at ${url}`);
-        });
-    }
-console.log('server created', apolloServer);
-    return apolloServer;
+const resolvers = {
+    Query: {
+        books: () => console.log(books) || books,
+    },
 };
 
-console.log('got here a');
+const errorLogging = {
+    requestDidStart(requestContext) {
+        console.log('Request started!', requestContext);
+        return {
+            parsingDidStart(requestContext) {
+                console.log("ApolloGQL: parsingDidStart A", requestContext);
+                return (err) => {
+                    if (err) {
+                        console.error("ApolloGQL: parsingDidStart B", err);
+                    }
+                }
+            },
+            validationDidStart(requestContext) {
+                console.log("ApolloGQL: validationDidStart A", requestContext);
+                return (errs) => {
+                    if (errs) {
+                        errs.forEach(err => console.error("ApolloGQL: validationDidStart B", err));
+                    }
+                }
+            },
+
+            didResolveOperation(requestContext) {
+                console.log("ApolloGQL: didResolveOperation", requestContext);
+            },
+            responseForOperation(requestContext) {
+                console.log("ApolloGQL: responseForOperation", requestContext);
+            },
+            executionDidStart(requestContext) {
+                console.log("ApolloGQL: executionDidStart A", requestContext);
+                return (err) => {
+                    if (err) {
+                        console.error("ApolloGQL: executionDidStart B", err);
+                    }
+                }
+            },
+            didEncounterErrors(requestContext) {
+                console.log("ApolloGQL: didEncounterErrors", requestContext);
+            },
+            willSendResponse(requestContext) {
+                console.log("ApolloGQL: willSendResponse", requestContext);
+            },
+        }
+    },
+};
+
+const server = express();
+
+const apolloServer = new ApolloServer({
+    debug: true,
+    introspection: true,
+    playground: true,
+    plugins: [
+        errorLogging
+    ],
+    resolvers,
+    tracing: true,
+    typeDefs,
+});
+
+
+// apolloServer.applyMiddleware({app, path: '/', cors: true});
+
+// if running locally in dev, then keep server running
+if (process.env.DEV) {
+  const port = 9031;
+  server.listen(port);
+console.log(`http://localhost:${port}`);
+}
+
 const { https } = require('firebase-functions');
-console.log('got here b');
-const api = https.onRequest(server());
-console.log('got here c');
+const api = https.onRequest(server);
 exports.api = api;
-console.log('got here d');
