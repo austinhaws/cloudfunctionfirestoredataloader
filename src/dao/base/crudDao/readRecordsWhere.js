@@ -8,7 +8,6 @@ const readByIds = async ({ collection, ids }) => {
 };
 
 const readByWhere = async ({ collection, where }) => {
-console.log('readByWHere', {collection, where});
   const query = Object.keys(where || {})
     .filter(key => where[key])
     .reduce((queryCarry, key) => queryCarry.where(key, '==', where[key]), db.collection(collection));
