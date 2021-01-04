@@ -53,9 +53,6 @@ Note: in server.js, the server continues listenting if in DEV mode. As a cloud f
 
 ## Versioning
 We use [SemVer](http://semver.org/) for versioning.
-For the versions available, see the [tags on this repository](https://git.dts.utah.gov/sixthfloor-east/goed-covid-masks/covid-masks-ws/-/tags).
-
-see [package.json](https://git.dts.utah.gov/sixthfloor-east/goed-covid-masks/covid-masks-ws/-/blob/dev/package.json)
 
 ## Deployment
 - Merges to the master branch will kick off a Cloud Build trigger that deploys code to the PROD environment.
