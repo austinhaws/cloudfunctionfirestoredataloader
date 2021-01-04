@@ -8,4 +8,12 @@ module.exports = {
       where: { name }
     })
   ),
+  saveSpeechData: async speechData => (
+    await crudDao.saveRecord({
+      collection: Collections.dictionaryPhrases,
+      merge: false,
+      record: speechData,
+      where: {name: speechData.name},
+    })
+  ),
 };

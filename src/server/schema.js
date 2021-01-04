@@ -15,4 +15,8 @@ type Speech {
 type Query {
   speeches: [Speech]
 }
+
+type Mutation {
+  loadSpeeches: [String]
+}
 `;

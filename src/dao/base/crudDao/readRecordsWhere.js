@@ -4,15 +4,14 @@ const documentToObject = require('../util/documentToObject');
 
 const readByIds = async ({ collection, ids }) => {
   const records = await db.getAll(...(ids.map(id => db.collection(collection).doc(id))));
-  return await collectionToArray({ docs: records });
+  return { docs: records };
 };
 
 const readByWhere = async ({ collection, where }) => {
   const query = Object.keys(where || {})
     .filter(key => where[key])
     .reduce((queryCarry, key) => queryCarry.where(key, '==', where[key]), db.collection(collection));
-  const results = await query.get();
-  return collectionToArray(results);
+  return await query.get();
 };
 
 const readById = async ({ collection, id }) => {
@@ -21,7 +20,7 @@ const readById = async ({ collection, id }) => {
     appResult = documentToObject(appResult);
 
     // expects results as an array, even if just one
-    return [appResult];
+    return {docs: [appResult]};
   }
 };
 
@@ -33,9 +32,10 @@ const readById = async ({ collection, id }) => {
  *
  * @param collection string
  * @param where object key value pairs of `key === value` where phrases
+ * @param convertToObjects bool if true then change to natural js array objects instead of collection of doc refs
  * @return {Promise<{}>}
  */
-module.exports = async ({ collection, where }) => {
+module.exports = async ({ collection, where, convertToObjects = true }) => {
   let result;
   if (where && where.id) {
     result = await readById({ collection, id: where.id });
@@ -43,6 +43,9 @@ module.exports = async ({ collection, where }) => {
     result = await readByIds({ collection, ids: where.ids });
   } else {
     result = await readByWhere({ collection, where });
+  }
+  if (convertToObjects && result) {
+    result = collectionToArray(result);
   }
   return result || [];
 };

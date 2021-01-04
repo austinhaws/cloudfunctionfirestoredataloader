@@ -1,6 +1,6 @@
 const db = require('../config/db');
 const jsonParseStringify = require('../util/jsonParseStringify');
-const crudDao = require('./crudDao');
+const readRecordsWhere = require('./readRecordsWhere');
 
 /**
  * Saves a firestore record. assumes that the record's id is set if it
@@ -14,16 +14,28 @@ const crudDao = require('./crudDao');
  * @param collection string
  * @param record object
  * @param merge bool if true then fields are merged together in document
+ * @param where object where fields for finding the record
  * @return {Promise<{}>}
  */
-module.exports = async ({ collection, record, merge }) => {
+module.exports = async ({ collection, record, merge, where }) => {
   let naturalInput = jsonParseStringify(record);
 
   if (record.id) {
     await db.collection(collection).doc(record.id).set(naturalInput, { merge: !!merge });
 
     // because of merge, the naturalInput may not have all the input
-    naturalInput = (await crudDao.readRecordsWhere({ collection, where: { id: record.id } })).pop();
+    naturalInput = (await readRecordsWhere({ collection, where: { id: record.id } })).pop();
+
+  } else if (where) {
+    const existingRecord = await readRecordsWhere({collection, where, convertToObjects: false});
+    if (existingRecord.docs && existingRecord.docs.length === 1) {
+      const doc = existingRecord.docs[0];
+      await doc.ref.update(naturalInput, { merge: !!merge });
+    } else {
+      const docRef = await db.collection(existingRecord).add(naturalInput);
+      naturalInput.id = docRef.id;
+    }
+
   } else {
     const docRef = await db.collection(collection).add(naturalInput);
     naturalInput.id = docRef.id;
